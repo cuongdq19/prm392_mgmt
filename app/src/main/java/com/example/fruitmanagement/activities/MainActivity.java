@@ -34,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menuCart:
                 Intent intent = new Intent(this, CartActivity.class);
                 startActivity(intent);
+            case R.id.menuExit:
+                intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.example.fruitmanagement.R;
 import com.example.fruitmanagement.daos.UserDAO;
-import com.example.fruitmanagement.db.MyDatabase;
 import com.example.fruitmanagement.dtos.UserDTO;
 
 public class LoginActivity extends AppCompatActivity {
@@ -40,5 +39,11 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
 
+    }
+
+    public void clickToSwitchToSignup(View view) {
+        Intent intent = new Intent(this, SignupActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.fruitmanagement.daos;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,6 +22,20 @@ public class UserDAO implements Serializable {
     private void closeConnection() throws Exception {
         if (db != null) {
             db.close();
+        }
+    }
+
+    public boolean register(UserDTO dto) throws Exception {
+        try {
+            db = conn.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put("username", dto.getUsername());
+            values.put("password", dto.getPassword());
+            values.put("email", dto.getEmail());
+            values.put("role", dto.getRole());
+            return db.insert("user", null, values) > 0;
+        } finally {
+            closeConnection();
         }
     }
 

@@ -15,6 +15,9 @@
         android:theme="@style/Theme.FruitManagement"
         tools:targetApi="31">
         <activity
+            android:name=".activities.SignupActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.CartActivity"
             android:exported="false">
             <meta-data
@@ -24,13 +27,13 @@
         <activity
             android:name=".activities.LoginActivity"
             android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
         <activity
             android:name=".activities.MainActivity"
@@ -40,5 +43,4 @@
                 android:value="" />
         </activity>
     </application>
-
 </manifest>
