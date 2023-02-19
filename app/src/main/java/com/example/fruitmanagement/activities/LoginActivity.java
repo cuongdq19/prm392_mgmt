@@ -3,12 +3,14 @@ package com.example.fruitmanagement.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.fruitmanagement.R;
+import com.example.fruitmanagement.constants.Constants;
 import com.example.fruitmanagement.daos.UserDAO;
 import com.example.fruitmanagement.dtos.UserDTO;
 
@@ -36,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("DTO", dto);
+        saveToPreference(dto);
         startActivity(intent);
         finish();
 
@@ -45,5 +48,15 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void saveToPreference(UserDTO dto) {
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("IDPref", dto.getUsername());
+        editor.putString("EmailPref", dto.getEmail());
+        editor.putString("Role", dto.getRole());
+        editor.commit();
     }
 }

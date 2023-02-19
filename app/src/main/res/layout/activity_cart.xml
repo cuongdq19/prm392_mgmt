@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.CartActivity">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,6 +19,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:id="@+id/listCartView"/>
+
+    <Button
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Checkout"
+        android:onClick="clickToCheckout"/>
 
 
 </LinearLayout>

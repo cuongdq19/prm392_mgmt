@@ -24,6 +24,9 @@ public class MyDatabase extends SQLiteOpenHelper {
         db.execSQL(Constants.SEED_USER_QUERY);
 
         db.execSQL(Constants.CREATE_CART_QUERY);
+
+        db.execSQL(Constants.CREATE_ORDER_QUERY);
+        db.execSQL(Constants.CREATE_ORDERDETAIL_QUERY);
     }
 
     @Override
@@ -31,6 +34,8 @@ public class MyDatabase extends SQLiteOpenHelper {
         db.execSQL(Constants.DROP_FRUIT_QUERY);
         db.execSQL(Constants.DROP_USER_QUERY);
         db.execSQL(Constants.DROP_CART_QUERY);
+        db.execSQL(Constants.DROP_ORDER_QUERY);
+        db.execSQL(Constants.DROP_ORDERDETAIL_QUERY);
 
         onCreate(db);
     }

@@ -55,7 +55,7 @@ public class FruitAdapter extends BaseAdapter {
         txtName.setText(dto.getName());
         txtPrice.setText(dto.getPrice() + "$");
         try {
-            Picasso.get().load(dto.getImage()).into(imgView);
+            Picasso.get().load(dto.getImage()).fit().into(imgView);
         } catch (Exception e) {
             e.printStackTrace();
         }

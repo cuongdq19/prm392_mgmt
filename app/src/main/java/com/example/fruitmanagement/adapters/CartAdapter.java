@@ -24,6 +24,10 @@ public class CartAdapter extends BaseAdapter {
         this.cartDTOList = cartDTOList;
     }
 
+    public ArrayList<CartItemDTO> getCartDTOList() {
+        return cartDTOList;
+    }
+
     @Override
     public int getCount() {
         return cartDTOList.size();
@@ -55,10 +59,10 @@ public class CartAdapter extends BaseAdapter {
         Button btnDecrease = convertView.findViewById(R.id.btnDecreaseCart);
 
         txtName.setText(dto.getName());
-        txtPrice.setText(String.valueOf(dto.getPrice()));
+        txtPrice.setText(dto.getPrice() + "$");
         txtQuantity.setText(String.valueOf(dto.getQuantity()));
         try {
-            Picasso.get().load(dto.getImage()).into(imgCartItem);
+            Picasso.get().load(dto.getImage()).fit().into(imgCartItem);
         } catch (Exception e) {
             e.printStackTrace();
         }

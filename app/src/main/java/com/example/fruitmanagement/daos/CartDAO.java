@@ -23,6 +23,15 @@ public class CartDAO {
             db.close();
         }
     }
+    
+    public boolean clearCart() throws Exception {
+        try {
+            db = conn.getWritableDatabase();
+            return db.delete("cart", null, null) >= 0;
+        } finally {
+            closeConnection();
+        }
+    }
 
     public ArrayList<CartItemDTO> getCartItems() throws Exception {
         ArrayList<CartItemDTO> result = new ArrayList<>();
