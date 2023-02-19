@@ -20,6 +20,14 @@
         android:layout_margin="5dp"
         android:id="@+id/listCartView"/>
 
+    <TextView
+        android:id="@+id/txtTotalPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Your Cart"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
     <Button
         android:layout_gravity="center"
         android:gravity="center"

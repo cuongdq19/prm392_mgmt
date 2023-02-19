@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fruitmanagement.R;
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class CartActivity extends AppCompatActivity {
-
+    private TextView txtTotalPrice;
     private ListView listCartView;
 
     @Override
@@ -31,21 +33,26 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
         setTitle("Your Cart");
-
-
+        txtTotalPrice = findViewById(R.id.txtTotalPrice);
         listCartView = findViewById(R.id.listCartView);
         CartAdapter adapter = new CartAdapter();
         CartDAO dao = new CartDAO(this);
         try {
             ArrayList<CartItemDTO> cartItems = dao.getCartItems();
             adapter.setCartDTOList(cartItems);
+            adapter.registerDataSetObserver(new DataSetObserver() {
+                @Override
+                public void onChanged() {
+                    txtTotalPrice.setText(getTotal(adapter.getCartDTOList()) + "$");
+                }
+            });
+
             listCartView.setAdapter(adapter);
+            txtTotalPrice.setText(getTotal(cartItems) + "$");
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     public void clickToCheckout(View view) {
@@ -76,5 +83,15 @@ public class CartActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    private double getTotal(ArrayList<CartItemDTO> cartDTOList) {
+        double total = 0;
+        for (int i = 0; i < cartDTOList.size(); i++) {
+            total += cartDTOList.get(i).getPrice() * cartDTOList.get(i).getQuantity();
+        }
+
+        return total;
     }
 }

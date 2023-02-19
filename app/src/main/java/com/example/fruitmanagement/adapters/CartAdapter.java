@@ -115,6 +115,8 @@ public class CartAdapter extends BaseAdapter {
         return convertView;
     }
 
+
+
     private void update() {
         notifyDataSetChanged();
     }

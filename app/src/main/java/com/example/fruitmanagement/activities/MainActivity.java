@@ -93,30 +93,32 @@ public class MainActivity extends AppCompatActivity {
             boolean hasCart = cartDAO.getCartItems().size() > 0;
 
             if (hasCart) {
-                alertDialog = new AlertDialog.Builder(this);
-                alertDialog.setTitle("You have items inside your Cart. Do you want to check?");
-                alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(MainActivity.this, CartActivity.class);
-                        startActivity(intent);
-                    }
-                });
-
-                alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
+                buildAlertDialog();
                 alertDialog.show();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
 
+    private void buildAlertDialog() {
+        alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("You have items inside your Cart. Do you want to check?");
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(MainActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
 
     }
 
