@@ -1,5 +1,6 @@
 package com.example.fruitmanagement.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fruitmanagement.R;
+import com.example.fruitmanagement.activities.DetailActivity;
 import com.example.fruitmanagement.daos.CartDAO;
 import com.example.fruitmanagement.dtos.CartItemDTO;
 import com.example.fruitmanagement.dtos.FruitDTO;
@@ -51,6 +53,7 @@ public class FruitAdapter extends BaseAdapter {
         TextView txtPrice = convertView.findViewById(R.id.txtPrice);
         ImageView imgView = convertView.findViewById(R.id.imgFruitView);
         Button btnAddToCart = convertView.findViewById(R.id.btnAddToCart);
+        Button btnDetail = convertView.findViewById(R.id.btnDetail);
 
         txtName.setText(dto.getName());
         txtPrice.setText(dto.getPrice() + "$");
@@ -80,6 +83,15 @@ public class FruitAdapter extends BaseAdapter {
 
             }
         });
+        btnDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), DetailActivity.class);
+                intent.putExtra("DTO",dto);
+                v.getContext().startActivity(intent);
+            }
+        });
+
 
         return convertView;
     }

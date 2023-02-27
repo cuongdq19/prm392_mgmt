@@ -47,13 +47,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_gravity="center">
+
                 <Button
+                    android:id="@+id/btnDetail"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:gravity="center"
-                    android:textSize="10dp"
                     android:layout_weight="1"
-                    android:text="Details"/>
+                    android:gravity="center"
+                    android:text="Details"
+                    android:textSize="10dp" />
                 <Space
                     android:layout_width="5dp"
                     android:layout_height="0dp"
