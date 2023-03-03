@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -37,16 +38,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menuCart:
-                Intent intent = new Intent(this, CartActivity.class);
+            case R.id.MenuHome:
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.menuExit:
-                logout();
+            case R.id.menuCart:
+                 intent = new Intent(this, CartActivity.class);
+                startActivity(intent);
                 break;
             case R.id.menuHistory:
                 intent = new Intent(this, OrderHistoryActivity.class);
                 startActivity(intent);
+            case R.id.menuExit:
+                logout();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -122,5 +127,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    public void clickToSwitchToAddress(View view) {
+        Intent intent = new Intent(this, MapsMarkerActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
