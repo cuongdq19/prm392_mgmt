@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,7 +14,9 @@ import com.example.fruitmanagement.daos.UserDAO;
 import com.example.fruitmanagement.dtos.UserDTO;
 
 public class SignupActivity extends AppCompatActivity {
-    private EditText edtUsername, edtPassword, edtConfirmPassword, edtEmail;
+    private static final String TAG = "Signup";
+
+    private EditText edtUsername, edtPassword, edtEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +24,6 @@ public class SignupActivity extends AppCompatActivity {
 
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
-        edtConfirmPassword = findViewById(R.id.edtConfirmPassword);
         edtEmail = findViewById(R.id.edtEmail);
     }
 
@@ -43,7 +45,7 @@ public class SignupActivity extends AppCompatActivity {
                 Toast.makeText(this, "Cannot create user.", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "Error Occurred: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "Error: " + e.getMessage());
         }
     }
 

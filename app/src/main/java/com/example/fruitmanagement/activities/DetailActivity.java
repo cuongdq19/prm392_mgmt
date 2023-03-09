@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,8 @@ import com.example.fruitmanagement.dtos.FruitDTO;
 import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
+    private static final String TAG = "Detail";
+
     private TextView txtName , txtPrice, txtDesc;
     private ImageView imgFruitView;
     private Button btnAddToCart;
@@ -69,7 +72,7 @@ public class DetailActivity extends AppCompatActivity {
                     }
                     Toast.makeText(v.getContext(), "Added to Cart", Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Log.e(TAG, "Error: " + e.getMessage());
                 }
 
             }

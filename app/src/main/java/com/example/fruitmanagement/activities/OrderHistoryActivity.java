@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import com.example.fruitmanagement.R;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderHistoryActivity extends AppCompatActivity {
+    private static final String TAG = "Cart";
+
     ListView listOrderHistoryView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
             adapter.setOrderDTOArrayList(orders);
             listOrderHistoryView.setAdapter(adapter);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error: " + e.getMessage());
         }
     }
 }

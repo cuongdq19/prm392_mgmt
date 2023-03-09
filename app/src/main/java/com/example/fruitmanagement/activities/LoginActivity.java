@@ -18,6 +18,8 @@ import com.example.fruitmanagement.daos.UserDAO;
 import com.example.fruitmanagement.dtos.UserDTO;
 
 public class LoginActivity extends AppCompatActivity {
+    private static final String TAG = "Login";
+
     private EditText edtUsername, edtPassword;
     private CheckBox cboRmb;
 
@@ -34,11 +36,12 @@ public class LoginActivity extends AppCompatActivity {
             finish();
             return;
         } else {
+            saveToPreference(null);
             CartDAO dao = new CartDAO(this);
             try {
                 dao.clearCart();
             } catch (Exception e) {
-                Log.e("LoginActivity", "Error onCreate");
+                Log.e(TAG, "Error: " + e.getMessage());
             }
         }
 
@@ -86,10 +89,18 @@ public class LoginActivity extends AppCompatActivity {
     private void saveToPreference(UserDTO dto) {
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (dto == null) {
+            // Remove dto from SharedPreferences
+            editor.remove("IDPref");
+            editor.remove("EmailPref");
+            editor.remove("Role");
 
-        editor.putString("IDPref", dto.getUsername());
-        editor.putString("EmailPref", dto.getEmail());
-        editor.putString("Role", dto.getRole());
+        } else {
+            editor.putString("IDPref", dto.getUsername());
+            editor.putString("EmailPref", dto.getEmail());
+            editor.putString("Role", dto.getRole());
+        }
+
         editor.commit();
     }
 }

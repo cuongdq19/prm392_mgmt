@@ -31,6 +31,8 @@ import com.example.fruitmanagement.dtos.FruitDTO;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "Main";
+
     private ListView listFruitView;
     private ArrayList<FruitDTO> fruitDTOList;
     private FruitAdapter adapter;
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Cannot logout.", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            Log.e("LoginActivity", "Error logout()");
+            Log.e(TAG, "Error: " + e.getMessage());
         }
     }
     
@@ -103,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = notiId;// The user-visible name of the channel.
+            CharSequence name = "Notify if cart exists.";// The user-visible name of the channel.
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel mChannel = new NotificationChannel(notiId, name, importance);
             notificationManager.createNotificationChannel(mChannel);
@@ -135,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 showNotification(getApplicationContext(), "Your Cart has Product", "Your Cart is not empty. Do you want to take a look?", intent, 0);
             }
         } catch (Exception e) {
-            Log.e("MainActivity", "Error onCreate");
+            Log.e(TAG, "Error: " + e.getMessage());
         }
 
     }

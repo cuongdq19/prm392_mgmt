@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class CartActivity extends AppCompatActivity {
+    private static final String TAG = "Cart";
     private TextView txtTotalPrice;
     private ListView listCartView;
 
@@ -51,7 +53,7 @@ public class CartActivity extends AppCompatActivity {
             txtTotalPrice.setText(getTotal(cartItems) + "$");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error: " + e.getMessage());
         }
     }
 
@@ -81,7 +83,7 @@ public class CartActivity extends AppCompatActivity {
                 Toast.makeText(this, "Failed!", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error: " + e.getMessage());
         }
     }
 
