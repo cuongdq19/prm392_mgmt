@@ -13,13 +13,14 @@
         android:icon="@drawable/shopping_cart"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/menuExit"
-        android:title="Exit"
-        android:icon="@drawable/exit"
-        app:showAsAction="always"/>
-    <item
         android:id="@+id/menuHistory"
         android:title="History"
         android:icon="@drawable/ic_baseline_history_24"
         app:showAsAction="always"/>
+    <item
+        android:id="@+id/menuExit"
+        android:title="Exit"
+        android:icon="@drawable/exit"
+        app:showAsAction="always"/>
+
 </menu>

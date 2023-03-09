@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menuHistory:
                 intent = new Intent(this, OrderHistoryActivity.class);
                 startActivity(intent);
+                break;
             case R.id.menuExit:
                 logout();
                 break;

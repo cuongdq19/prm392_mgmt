@@ -76,7 +76,7 @@ public class CartActivity extends AppCompatActivity {
                 CartDAO cartDAO = new CartDAO(this);
                 cartDAO.clearCart();
 
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, BillingActivity.class);
                 startActivity(intent);
                 finish();
             } else {
