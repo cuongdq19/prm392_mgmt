@@ -1,10 +1,16 @@
 package com.example.fruitmanagement.activities;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.example.fruitmanagement.R;
 import com.example.fruitmanagement.adapters.FruitAdapter;
@@ -27,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private ListView listFruitView;
     private ArrayList<FruitDTO> fruitDTOList;
     private FruitAdapter adapter;
-    private AlertDialog.Builder alertDialog;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -62,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         editor.remove("IDPref");
         editor.remove("EmailPref");
         editor.remove("Role");
+        editor.remove("Remember");
+        editor.apply();
         CartDAO dao = new CartDAO(this);
         try {
             boolean success = dao.clearCart();
@@ -74,9 +82,34 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Cannot logout.", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("LoginActivity", "Error logout()");
         }
-        
+    }
+    
+    private void showNotification(Context context, String title, String message, Intent intent, int reqCode)
+    {
+        String notiId = "cart_exists";
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,reqCode, intent, PendingIntent.FLAG_ONE_SHOT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, notiId)
+                .setSmallIcon(R.drawable.shopping_cart)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setAutoCancel(true)
+                .setChannelId(notiId)
+                .setContentIntent(pendingIntent);
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = notiId;// The user-visible name of the channel.
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(notiId, name, importance);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+
+        notificationManager.notify(reqCode, builder.build()); // 0 is the request code, it should be unique id
     }
 
     @Override
@@ -98,32 +131,12 @@ public class MainActivity extends AppCompatActivity {
             boolean hasCart = cartDAO.getCartItems().size() > 0;
 
             if (hasCart) {
-                buildAlertDialog();
-                alertDialog.show();
+                Intent intent = new Intent(this, CartActivity.class);
+                showNotification(getApplicationContext(), "Your Cart has Product", "Your Cart is not empty. Do you want to take a look?", intent, 0);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("MainActivity", "Error onCreate");
         }
-
-    }
-
-    private void buildAlertDialog() {
-        alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("You have items inside your Cart. Do you want to check?");
-        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(MainActivity.this, CartActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
 
     }
 

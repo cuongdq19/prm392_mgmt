@@ -5,30 +5,53 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.fruitmanagement.R;
 import com.example.fruitmanagement.constants.Constants;
+import com.example.fruitmanagement.daos.CartDAO;
 import com.example.fruitmanagement.daos.UserDAO;
 import com.example.fruitmanagement.dtos.UserDTO;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText edtUsername, edtPassword;
+    private CheckBox cboRmb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+        boolean remember = sharedPreferences.getBoolean("Remember", false);
+        if (remember) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        } else {
+            CartDAO dao = new CartDAO(this);
+            try {
+                dao.clearCart();
+            } catch (Exception e) {
+                Log.e("LoginActivity", "Error onCreate");
+            }
+        }
+
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPassword);
+        cboRmb = findViewById(R.id.cboRemember);
     }
 
 
     public void clickToLogin(View view) throws Exception {
         String username = edtUsername.getText().toString();
         String password = edtPassword.getText().toString();
+        boolean isRemember = cboRmb.isChecked();
 
         UserDAO dao = new UserDAO(this);
         UserDTO dto = dao.login(username, password);
@@ -39,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("DTO", dto);
         saveToPreference(dto);
+        saveToPreference(isRemember);
         startActivity(intent);
         finish();
 
@@ -48,6 +72,15 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void saveToPreference(boolean isRemember) {
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putBoolean("Remember", isRemember);
+        editor.commit();
+
     }
 
     private void saveToPreference(UserDTO dto) {

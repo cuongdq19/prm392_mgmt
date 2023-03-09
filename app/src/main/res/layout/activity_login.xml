@@ -30,6 +30,12 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:id="@+id/edtPassword"/>
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Remember Password"
+        android:id="@+id/cboRemember"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
