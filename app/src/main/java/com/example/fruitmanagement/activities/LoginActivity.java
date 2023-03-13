@@ -62,11 +62,21 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid username or password.", Toast.LENGTH_SHORT).show();
             return;
         }
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("DTO", dto);
-        saveToPreference(dto);
-        saveToPreference(isRemember);
-        startActivity(intent);
+        String role = dto.getRole();
+        if(role.equals("User")){
+
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("DTO", dto);
+            saveToPreference(dto);
+            saveToPreference(isRemember);
+            startActivity(intent);
+        } else if(role.equals("Admin")) {
+            Intent intent = new Intent(this, AdminActivity.class);
+            intent.putExtra("DTO", dto);
+            saveToPreference(dto);
+            saveToPreference(isRemember);
+            startActivity(intent);
+        }
         finish();
 
     }

@@ -1,10 +1,13 @@
 package com.example.fruitmanagement.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.example.fruitmanagement.R;
@@ -20,6 +23,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
     private static final String TAG = "Cart";
 
     ListView listOrderHistoryView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,5 +42,19 @@ public class OrderHistoryActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e(TAG, "Error: " + e.getMessage());
         }
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.MenuHome:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.menuCart:
+                intent = new Intent(this, CartActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

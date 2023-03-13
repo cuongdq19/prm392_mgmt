@@ -75,8 +75,8 @@ public class UserDAO implements Serializable {
             cs.moveToFirst();
 
             if (cs.isLast()) {
-                email = cs.getString(0);
-                role = cs.getString(1);
+                role = cs.getString(0);
+                email = cs.getString(1);
                 dto = new UserDTO(username, email, role);
             }
 

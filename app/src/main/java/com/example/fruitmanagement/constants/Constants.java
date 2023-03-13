@@ -56,7 +56,10 @@ public final class Constants {
     public static final String SEED_FRUIT_QUERY = "INSERT INTO \"fruit\" (\"id\",\"name\",\"description\",\"price\",\"quantity\",\"image\") VALUES " +
             "(1,'Banana','Banana',10000,100,'https://target.scene7.com/is/image/Target/GUEST_f5d0cfc3-9d02-4ee0-a6c6-ed5dc09971d1?wid=488&hei=488&fmt=pjpeg')," +
             "(2,'Apple','Apple',30000,100,'https://dictionary.cambridge.org/vi/images/thumb/apple_noun_001_00650.jpg?version=5.0.295')," +
-            "(3,'Carrot','Carrot',50000,100,'https://bizweb.dktcdn.net/100/433/358/products/bc5480dd-2263-4ce9-a94a-37bd202566fa.jpg?v=1654351336440')";
+            "(3,'Strawberry','Strawberry',15000,100,'https://www.thermofisher.com/blog/food/wp-content/uploads/sites/5/2015/08/single_strawberry__isolated_on_a_white_background.jpg')," +
+            "(4,'Carrot','Carrot',9000,5,'https://bizweb.dktcdn.net/100/433/358/products/bc5480dd-2263-4ce9-a94a-37bd202566fa.jpg?v=1654351336440')";
 
-    public static final String SEED_USER_QUERY = "INSERT INTO \"user\" (\"username\",\"password\",\"role\",\"email\") VALUES ('admin','1','Admin','admin@gmail.com');\n";
+    public static final String SEED_USER_QUERY = "INSERT INTO \"user\" (\"username\",\"password\",\"role\",\"email\") VALUES " +
+            "('admin','1','Admin','admin@gmail.com'),"+
+            "('user','1','User','user@gmail.com');\n";
 }

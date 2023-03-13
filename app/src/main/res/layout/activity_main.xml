@@ -21,7 +21,8 @@
             android:id="@+id/address"
             android:layout_width="148dp"
             android:layout_height="wrap_content"
-            android:text="Store Location: FPT HCM" />
+            android:text="Store Location: FPT HCM"
+            android:textColor="#000000" />
 
         <Button
             android:id="@+id/idAddress"

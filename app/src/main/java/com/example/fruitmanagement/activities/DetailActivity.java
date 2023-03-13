@@ -31,15 +31,20 @@ public class DetailActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menuCart:
-                Intent intent = new Intent(this, CartActivity.class);
+            case R.id.MenuHome:
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
-            default:
-                return super.onOptionsItemSelected(item);
+                break;
+            case R.id.menuCart:
+                intent = new Intent(this, CartActivity.class);
+                startActivity(intent);
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
