@@ -47,8 +47,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.MenuHome:
-                Intent intent = new Intent(this, MainActivity.class);
+
+                Intent intent = new Intent(this, AdminChatActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.menuCart:
                  intent = new Intent(this, CartActivity.class);

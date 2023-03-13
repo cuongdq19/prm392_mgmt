@@ -31,7 +31,9 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
         boolean remember = sharedPreferences.getBoolean("Remember", false);
         if (remember) {
-            Intent intent = new Intent(this, MainActivity.class);
+            String role = sharedPreferences.getString("Role", "");
+
+            Intent intent = new Intent(this, role.equals("User") ? MainActivity.class : AdminChatActivity.class);
             startActivity(intent);
             finish();
             return;
@@ -63,15 +65,14 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
         String role = dto.getRole();
-        if(role.equals("User")){
-
-            Intent intent = new Intent(this, MainActivity.class);
+        if(role.equals("User")) {
+            Intent intent = new Intent(this, UserChatActivity.class);
             intent.putExtra("DTO", dto);
             saveToPreference(dto);
             saveToPreference(isRemember);
             startActivity(intent);
         } else if(role.equals("Admin")) {
-            Intent intent = new Intent(this, AdminActivity.class);
+            Intent intent = new Intent(this, AdminChatActivity.class);
             intent.putExtra("DTO", dto);
             saveToPreference(dto);
             saveToPreference(isRemember);
