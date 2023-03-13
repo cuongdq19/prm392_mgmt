@@ -1,11 +1,10 @@
 package com.example.fruitmanagement.activities;
 
-import android.app.AlertDialog;
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -17,6 +16,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -32,10 +33,12 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Main";
+    private static final String NOTIFICATION_ID = "CART_EXISTS";
 
     private ListView listFruitView;
     private ArrayList<FruitDTO> fruitDTOList;
     private FruitAdapter adapter;
+    private ActivityResultLauncher<String> notificationPermissionLauncher;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -91,34 +94,52 @@ public class MainActivity extends AppCompatActivity {
     
     private void showNotification(Context context, String title, String message, Intent intent, int reqCode)
     {
-        String notiId = "cart_exists";
+        if (Build.VERSION.SDK_INT >= 33) {
+            notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+        }
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,reqCode, intent, PendingIntent.FLAG_ONE_SHOT);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, notiId)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && notificationManager.getNotificationChannel(NOTIFICATION_ID) == null) {
+            CharSequence name = "Notify if cart exists.";// The user-visible name of the channel.
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(NOTIFICATION_ID, name, importance);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, reqCode, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_ID)
                 .setSmallIcon(R.drawable.shopping_cart)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)
-                .setChannelId(notiId)
+                .setChannelId(NOTIFICATION_ID)
                 .setContentIntent(pendingIntent);
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(getUniqueId(), builder.build());
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Notify if cart exists.";// The user-visible name of the channel.
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel mChannel = new NotificationChannel(notiId, name, importance);
-            notificationManager.createNotificationChannel(mChannel);
-        }
+    }
 
-        notificationManager.notify(reqCode, builder.build()); // 0 is the request code, it should be unique id
+    private int getUniqueId() {
+        return (int) (System.currentTimeMillis() % 10000);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (Build.VERSION.SDK_INT >= 33) {
+            notificationPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (!isGranted) {
+                    Toast.makeText(this, "Notifications not granted.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Notifications granted.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
 
         setTitle("Fruits");
 
@@ -135,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (hasCart) {
                 Intent intent = new Intent(this, CartActivity.class);
-                showNotification(getApplicationContext(), "Your Cart has Product", "Your Cart is not empty. Do you want to take a look?", intent, 0);
+                showNotification(this, "Your Cart has Product", "Your Cart is not empty. Do you want to take a look?", intent, getUniqueId());
             }
         } catch (Exception e) {
             Log.e(TAG, "Error: " + e.getMessage());
