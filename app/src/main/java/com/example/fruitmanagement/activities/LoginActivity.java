@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         if (remember) {
             String role = sharedPreferences.getString("Role", "");
 
-            Intent intent = new Intent(this, role.equals("User") ? MainActivity.class : AdminChatActivity.class);
+            Intent intent = new Intent(this, role.equals("User") ? ChatActivity.class : ChatActivity.class);
             startActivity(intent);
             finish();
             return;
@@ -66,13 +66,13 @@ public class LoginActivity extends AppCompatActivity {
         }
         String role = dto.getRole();
         if(role.equals("User")) {
-            Intent intent = new Intent(this, UserChatActivity.class);
+            Intent intent = new Intent(this, ChatActivity.class);
             intent.putExtra("DTO", dto);
             saveToPreference(dto);
             saveToPreference(isRemember);
             startActivity(intent);
         } else if(role.equals("Admin")) {
-            Intent intent = new Intent(this, AdminChatActivity.class);
+            Intent intent = new Intent(this, ChatActivity.class);
             intent.putExtra("DTO", dto);
             saveToPreference(dto);
             saveToPreference(isRemember);

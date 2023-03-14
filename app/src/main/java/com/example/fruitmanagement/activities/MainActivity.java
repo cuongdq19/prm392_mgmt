@@ -47,8 +47,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.MenuHome:
-
-                Intent intent = new Intent(this, AdminChatActivity.class);
+                Intent intent = new Intent(this, ChatActivity.class);
                 startActivity(intent);
                 finish();
                 break;
