@@ -121,15 +121,6 @@ public class ChatActivity extends AppCompatActivity {
                 addMessage(messageToSend);
             }
         });
-
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String content = edtMsg.getText().toString();
-                Message messageToSend = new Message(username, content, roomName);
-                socket.emit("newMessage", gson.toJson(messageToSend));
-            }
-        });
     }
 
     @Override
