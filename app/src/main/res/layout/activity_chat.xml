@@ -16,15 +16,16 @@
         android:id="@+id/edtMsg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btnSend"
+        android:text="Send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <ListView
         android:id="@+id/listChat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <Button
-        android:id="@+id/btnSend"
-        android:text="Send"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+
 </LinearLayout>
