@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.fruitmanagement.R;
 import com.example.fruitmanagement.daos.CartDAO;
+import com.example.fruitmanagement.daos.FruitDAO;
 import com.example.fruitmanagement.dtos.CartItemDTO;
 import com.squareup.picasso.Picasso;
 
@@ -68,18 +69,24 @@ public class CartAdapter extends BaseAdapter {
         }
 
         CartDAO dao = new CartDAO(convertView.getContext());
+        FruitDAO fruitDAO = new FruitDAO(convertView.getContext());
 
         btnIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Click to increase
                 try {
-                    boolean success = dao.updateCart(dto.getId(), dto.getQuantity() + 1);
+                    boolean success = fruitDAO.checkQuantity(dto.getId(), dto.getQuantity() + 1);
+                    if (!success) {
+                        Toast.makeText(v.getContext(), "Not enough fruit.", Toast.LENGTH_LONG).show();;
+                        return;
+                    }
+                     success = dao.updateCart(dto.getId(), dto.getQuantity() + 1);
                     if (success) {
                         getItem(position).setQuantity(dto.getQuantity() + 1);
                         notifyDataSetChanged();
                     } else {
-                        Toast.makeText(v.getContext(), "Error occurred.", Toast.LENGTH_LONG);
+                        Toast.makeText(v.getContext(), "Error occurred.", Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -103,7 +110,7 @@ public class CartAdapter extends BaseAdapter {
                     if (success) {
                         notifyDataSetChanged();
                     } else {
-                        Toast.makeText(v.getContext(), "Error occurred.", Toast.LENGTH_LONG);
+                        Toast.makeText(v.getContext(), "Error occurred.", Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

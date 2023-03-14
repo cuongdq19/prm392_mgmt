@@ -50,4 +50,24 @@ public class FruitDAO implements Serializable {
 
         return result;
     }
+
+    public boolean checkQuantity(int id, int quantityToCheck) throws Exception {
+        try {
+            db = conn.getReadableDatabase();
+            Cursor cs = db.rawQuery("SELECT Quantity " +
+                    "FROM Fruit WHERE id = ?", new String[] {String.valueOf(id)});
+
+            cs.moveToFirst();
+            if (cs.isLast()) {
+                int quantity = cs.getInt(0);
+                return quantity >= quantityToCheck;
+            }
+        } finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+
+        return false;
+    }
 }
