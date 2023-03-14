@@ -38,7 +38,10 @@ io.on('connect', (socket) => {
   socket.on('unsubscribe', (data) => {
     console.log('Unsubscribe triggered');
 
-    var roomName = 'admin';
+    var roomData = JSON.parse(data);
+
+    var username = roomData.username;
+    var roomName = roomData.roomName;
 
     console.log(`Username: ${username} leaved room name: ${roomName}`);
     socket.broadcast.to(`${roomName}`).emit('userLeftChatRoom', username);
@@ -51,7 +54,7 @@ io.on('connect', (socket) => {
     var roomData = JSON.parse(data);
     var username = roomData.username;
     var messageContent = roomData.content;
-    var roomName = 'admin';
+    var roomName = roomData.roomName;
 
     console.log(`[Room Number ${roomName}] ${username}: ${messageContent}`);
 

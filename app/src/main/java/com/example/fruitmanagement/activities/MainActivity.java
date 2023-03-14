@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.MenuHome:
-                Intent intent = new Intent(this, ChatActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();
                 break;
@@ -148,5 +148,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MapsMarkerActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void clickToChat(View view) {
+        Intent intent = new Intent(this, ChatActivity.class);
+        startActivity(intent);
     }
 }

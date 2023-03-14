@@ -22,7 +22,7 @@ import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
 public class ChatActivity extends AppCompatActivity {
-    private static final String TAG = "UserChatActivity";
+    private static final String TAG = "ChatActivity";
     
     private Socket socket;
     private Button btnSend;
@@ -41,6 +41,7 @@ public class ChatActivity extends AppCompatActivity {
             public void run() {
                 adapter.addMessage(message);
                 edtMsg.setText("");
+                listMessages.smoothScrollToPosition(listMessages.getChildCount());
             }
         });
     }
@@ -66,8 +67,7 @@ public class ChatActivity extends AppCompatActivity {
 
         try {
             socket = IO.socket(Constants.SOCKET_URL);
-            Log.d("Success", socket.id());
-
+            System.out.println("Socket ID = " + socket.id());
         } catch (Exception e) {
             Log.e(TAG, "Error: " + e.getMessage());
         }
@@ -127,7 +127,8 @@ public class ChatActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        socket.emit("unsubscribe", username);
+        Message chat = new Message(username, roomName);
+        socket.emit("unsubscribe", gson.toJson(chat));
         socket.disconnect();
 
     }

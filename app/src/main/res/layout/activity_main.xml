@@ -11,10 +11,11 @@
 
     <LinearLayout
         android:layout_width="241dp"
-        android:layout_height="106dp"
+        android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:gravity="center"
         android:orientation="vertical"
+        android:padding="10dp"
         android:radius="100dp">
 
         <TextView
@@ -31,6 +32,11 @@
             android:gravity="center"
             android:onClick="clickToSwitchToAddress"
             android:text="Go to store" />
+        <Button
+            android:text="Chat with Store"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="clickToChat"/>
     </LinearLayout>
 
     <ListView
