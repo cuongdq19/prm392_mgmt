@@ -22,13 +22,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.AdminActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".activities.BillingActivity"
             android:exported="false">
             <meta-data

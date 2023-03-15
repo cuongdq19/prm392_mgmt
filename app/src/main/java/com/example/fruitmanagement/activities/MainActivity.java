@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
@@ -31,7 +32,7 @@ import com.example.fruitmanagement.dtos.FruitDTO;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "Main";
+    private static final String TAG = "MainActivity";
 
     private ListView listFruitView;
     private ArrayList<FruitDTO> fruitDTOList;
@@ -46,13 +47,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.MenuHome:
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                finish();
-                break;
             case R.id.menuCart:
-                 intent = new Intent(this, CartActivity.class);
+                Intent intent = new Intent(this, CartActivity.class);
                 startActivity(intent);
                 break;
             case R.id.menuHistory:
@@ -61,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.menuExit:
                 logout();
+                break;
+            case android.R.id.home:
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

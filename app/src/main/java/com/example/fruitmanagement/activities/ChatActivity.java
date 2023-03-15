@@ -1,19 +1,26 @@
 package com.example.fruitmanagement.activities;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fruitmanagement.R;
 import com.example.fruitmanagement.adapters.ChatAdapter;
 import com.example.fruitmanagement.constants.Constants;
+import com.example.fruitmanagement.daos.CartDAO;
 import com.example.fruitmanagement.models.Message;
 import com.google.gson.Gson;
 
@@ -28,6 +35,7 @@ public class ChatActivity extends AppCompatActivity {
     private Button btnSend;
     private TextView txtMsgs;
     private String username;
+    private String role;
     private String roomName = "admin";
 
     private Gson gson = new Gson();
@@ -47,13 +55,50 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (role.equals("Admin")) {
+            getMenuInflater().inflate(R.menu.admin_menu, menu);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuCart:
+                Intent intent = new Intent(this, CartActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.menuHistory:
+                intent = new Intent(this, OrderHistoryActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.menuExit:
+                logout();
+                break;
+            case android.R.id.home:
+                if (role.equals("User")) {
+                    finish();
+                } else {
+                    logout();
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
         username = sharedPreferences.getString("IDPref", "");
+        role = sharedPreferences.getString("Role", "");
 
         setTitle(username + " Chat Room");
 
@@ -131,5 +176,29 @@ public class ChatActivity extends AppCompatActivity {
         socket.emit("unsubscribe", gson.toJson(chat));
         socket.disconnect();
 
+    }
+
+    private void logout() {
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("IDPref");
+        editor.remove("EmailPref");
+        editor.remove("Role");
+        editor.remove("Remember");
+        editor.apply();
+        CartDAO dao = new CartDAO(this);
+        try {
+            boolean success = dao.clearCart();
+            if (success) {
+                Intent intent = new Intent(this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(this, "Cannot logout.", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error: " + e.getMessage());
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.fruitmanagement.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -29,6 +30,9 @@ public class OrderHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         listOrderHistoryView = findViewById(R.id.listOrderHistoryView);
 
         OrderAdapter adapter = new OrderAdapter();
@@ -53,6 +57,9 @@ public class OrderHistoryActivity extends AppCompatActivity {
             case R.id.menuCart:
                 intent = new Intent(this, CartActivity.class);
                 startActivity(intent);
+                break;
+            case android.R.id.home:
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

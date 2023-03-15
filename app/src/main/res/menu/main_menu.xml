@@ -4,9 +4,7 @@
     <item
         android:id="@+id/MenuHome"
         android:title="Home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:icon="@drawable/ic_launcher_foreground"
+            android:icon="@drawable/ic_launcher_foreground"
         app:showAsAction="always" />
     <item
         android:id="@+id/menuCart"

@@ -1,6 +1,7 @@
 package com.example.fruitmanagement.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -30,6 +31,7 @@ public class CartActivity extends AppCompatActivity {
     private static final String TAG = "Cart";
     private TextView txtTotalPrice;
     private ListView listCartView;
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -41,6 +43,9 @@ public class CartActivity extends AppCompatActivity {
                 intent = new Intent(this, CartActivity.class);
                 startActivity(intent);
                 break;
+            case android.R.id.home:
+                finish();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -48,6 +53,9 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         setTitle("Your Cart");
         txtTotalPrice = findViewById(R.id.txtTotalPrice);
