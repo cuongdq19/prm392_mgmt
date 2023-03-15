@@ -2,8 +2,7 @@ package com.example.fruitmanagement.constants;
 
 public final class Constants {
     public static final String SHARED_PREFERENCE_NAME = "com.example.fruitmanagement";
-//    public static final String SOCKET_URL = "https://prm392-socket.azurewebsites.net/";
-    public static final String SOCKET_URL = "https://c42b-2405-4802-913c-74a0-ac42-3c3b-ca10-b35e.ap.ngrok.io/";
+    public static final String SOCKET_URL = "https://prm392-socket.azurewebsites.net/";
 
     public static final String DB_NAME = "management.db";
 

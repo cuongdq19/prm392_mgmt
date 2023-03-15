@@ -123,6 +123,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void call(Object... args) {
                 String jsonData = gson.toJson(new Message(username, roomName));
+                System.out.println("Connected");
                 socket.emit("subscribe", jsonData);
             }
         };
